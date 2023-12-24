@@ -11,20 +11,44 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "experiments": {
+      "tsconfigPaths": true
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+        }
+      ]
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "package": "com.rtvdev.foodscanner"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "81f3ca6d-99e5-4bbf-b976-8bc282dd0386"
+      }
     }
   }
 }
