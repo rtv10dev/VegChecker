@@ -1,6 +1,7 @@
-import { BarCodeScanner, BarCodeScannerResult } from "expo-barcode-scanner";
+import Text from "components/Text";
+import { BarCodeScanningResult, Camera } from "expo-camera";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Props } from "./props";
 
 const delay = (time) => {
@@ -15,21 +16,19 @@ const Scanner: React.FC<Props> = ({ onScanProduct, navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      // do something - for example: reset states, ask for camera permission
       setHasPermission(false);
       (async () => {
-        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        const { status } = await Camera.requestCameraPermissionsAsync();
         setHasPermission(status === "granted");
       })();
     });
 
-    // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     };
 
@@ -43,30 +42,37 @@ const Scanner: React.FC<Props> = ({ onScanProduct, navigation }) => {
     return <Text>No access to camera</Text>;
   }
 
-  const scanHandler = async (productInfo: BarCodeScannerResult) => {
-    console.log("SCANN");
+  const scanHandler = async (productInfo: BarCodeScanningResult) => {
     await delay(500);
-    console.log(read.current, productInfo.data);
+
     if (read.current == productInfo.data) return;
     read.current = productInfo.data;
-    console.log(read.current);
+
     onScanProduct(productInfo);
   };
 
   return (
-    <BarCodeScanner
-      onBarCodeScanned={scanHandler}
-      style={StyleSheet.absoluteFillObject}
-    />
+    <View style={StyleSheet.absoluteFillObject}>
+      <Text
+        style={{
+          position: "absolute",
+          top: "15%",
+          left: "7%",
+
+          zIndex: 20,
+        }}
+      >
+        Scan a barcode to know if it's{" "}
+        <Text style={{ fontWeight: "bold" }}>VEGAN</Text> or/and{" "}
+        <Text style={{ fontWeight: "bold" }}>VEGETARIAN</Text>
+      </Text>
+      <Camera
+        onBarCodeScanned={scanHandler}
+        ratio="16:9"
+        style={StyleSheet.absoluteFillObject}
+      />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default Scanner;

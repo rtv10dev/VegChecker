@@ -1,4 +1,4 @@
-const basePath = "https://world.openfoodfacts.net/api/v3";
+const basePath = "https://world.openfoodfacts.org/api/v3";
 
 export const getProductInfo = async (productCode: string): Promise<any> => {
   const resp = await fetch(

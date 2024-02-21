@@ -1,6 +1,6 @@
-import { BarCodeScannerResult } from "expo-barcode-scanner";
+import { BarCodeScanningResult } from "expo-camera";
 
 export type Props = {
-  onScanProduct: (productInfo: BarCodeScannerResult) => void;
+  onScanProduct: (productInfo: BarCodeScanningResult) => void;
   navigation: any;
 };

@@ -9,7 +9,9 @@ const Analysis: React.FC<Props> = ({ className, header, image, subtext }) => {
     <View style={[styles.container, styles[className]]}>
       <Text style={styles.text}>{header}</Text>
       <Image style={styles.image} source={image}></Image>
-      <Text style={styles.subtext}>{subtext}</Text>
+      <Text style={styles.subtext} numberOfLines={5}>
+        {subtext}
+      </Text>
     </View>
   );
 };

@@ -9,6 +9,10 @@ const App = () => {
     Kreon: require("./assets/fonts/Kreon-VariableFont_wght.ttf"),
   });
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <>
       <NavigationContainer>

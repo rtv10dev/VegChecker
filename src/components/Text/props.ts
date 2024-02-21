@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
+import { TextStyle } from "react-native/types";
 
 export type Props = {
   children: ReactNode;
-  style?: any;
+  style?: TextStyle;
+  numberOfLines?: number;
 };
